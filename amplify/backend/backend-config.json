@@ -1,0 +1,55 @@
+{
+	"auth": {
+		"nevaehdollhoued09f944f": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	},
+	"storage": {
+		"boutiqueImages": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"processPayment": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": []
+		},
+		"createOrder": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"nevaehdollhoue": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "API_KEY",
+							"apiKeyConfig": {
+								"description": "Guest user access to boutique items",
+								"apiKeyExpirationDays": 365
+							}
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authnevaehdollhoued09f944f"
+						}
+					}
+				}
+			}
+		}
+	}
+}
